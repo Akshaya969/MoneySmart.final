@@ -1,13 +1,15 @@
 export default async function handler(req, res) {
   const { question } = req.body || {};
-  if (!question) return res.status(400).json({ error: "Missing question" });
+  if (!question)
+    return res.status(400).json({ error: "Missing question" });
 
-  // Basic topic filter
-  const forbidden = ["personal", "password", "love", "sex", "health"];
+  // Only answer finance/business/economics topics
+  const forbidden = ["personal", "love", "health", "password", "romance"];
   const validTopics = ["finance", "business", "economics", "money", "budget"];
   const lower = question.toLowerCase();
   const valid = validTopics.some((v) => lower.includes(v));
   const invalid = forbidden.some((f) => lower.includes(f));
+
   if (!valid || invalid) {
     return res.json({
       answer:
@@ -15,9 +17,9 @@ export default async function handler(req, res) {
     });
   }
 
-  // Replace this with your actual OpenAI call
-  // Example placeholder
-  const answer = `This is where your AI reply would go for: "${question}"`;
+  // Placeholder response (replace later with OpenAI API call)
+  const answer = `Here's a helpful insight about ${question}: Stay focused on budgeting, investments, and smart decision-making!`;
 
   res.json({ answer });
 }
+
